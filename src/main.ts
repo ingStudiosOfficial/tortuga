@@ -1,4 +1,5 @@
-import Parser from "./parser.js";
+import Parser from "./frontend/parser.js";
+import { evaluate } from "./runtime/interpreter.js";
 
 import * as readline from 'readline/promises';
 import { stdin as input, stdout as output } from 'process';
@@ -19,10 +20,14 @@ async function repl() {
 
         try {
             const program = parser.produceAST(userInput);
-            console.dir(program, {
+
+            const result = evaluate(program);
+            console.dir(result, {
                 depth: null,
                 colors: true
             });
+
+            console.log('\n')
         } catch (e) {
             console.error("Parser Error:", e);
         }

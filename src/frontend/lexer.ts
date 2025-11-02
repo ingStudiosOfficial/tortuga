@@ -1,6 +1,7 @@
 import * as fs from 'fs';
 
 export enum TokenType {
+    Null,
     Number,
     Identifier, // Done
     Equals, // Done
@@ -14,6 +15,7 @@ export enum TokenType {
 
 const KEYWORDS: Record<string, TokenType> = {
     "const": TokenType.Const,
+    "null": TokenType.Null,
 };
 
 export interface Token {
@@ -71,10 +73,10 @@ export function tokenize(sourceCode: string): Token[] {
 
                 // Check for reserved keywords
                 const reserved = KEYWORDS[ident];
-                if (reserved === undefined) {
-                    tokens.push(token(ident, TokenType.Identifier));
-                } else {
+                if (typeof reserved === "number") {
                     tokens.push(token(ident, reserved));
+                } else {
+                    tokens.push(token(ident, TokenType.Identifier));
                 }
             } else if (isskippable(src[0])) {
                 src.shift(); // Skips the current character

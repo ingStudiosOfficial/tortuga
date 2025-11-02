@@ -1,5 +1,5 @@
 // Import AST types
-import { Stmt, Program, Expr, BinaryExpr, NumericLiteral, Identifier } from "./ast.js";
+import { Stmt, Program, Expr, BinaryExpr, NumericLiteral, Identifier, NullLiteral } from "./ast.js";
 
 // Import lexer
 import { tokenize, Token, TokenType } from "./lexer.js";
@@ -113,6 +113,10 @@ export default class Parser {
         switch (tk) {
             case TokenType.Identifier:
                 return { kind: "Identifier", symbol: this.eat().value } as Identifier;
+
+            case TokenType.Null:
+                this.eat() // Advance past null keyword
+                return { kind: "NullLiteral", value: "null" } as NullLiteral;
 
             case TokenType.Number:
                 return {
