@@ -1,9 +1,9 @@
 import * as fs from 'fs';
 
 export enum TokenType {
-    Null,
-    Number,
+    Number, // Done
     Identifier, // Done
+    String,
     Equals, // Done
     OpenParen, // Done
     CloseParen, // Done
@@ -14,8 +14,7 @@ export enum TokenType {
 }
 
 const KEYWORDS: Record<string, TokenType> = {
-    "const": TokenType.Const,
-    "null": TokenType.Null,
+    "const": TokenType.Const
 };
 
 export interface Token {
